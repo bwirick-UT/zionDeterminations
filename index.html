@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<head>
+    <title>Zion Determination's Template</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <main id="wrapper">
+        <div id="header-container">
+            <h1>Zion Determination's Template</h1>
+            <div>
+                <label class="switch">
+                    <input id="iosToggle" type="checkbox" />
+                    <div class="switch-btn"></div>
+                </label>
+            </div>
+        </div>
+        
+        <div id="insiderInformation">
+            <h2>Pumpkin's info</h2>
+            <!-- <div class="toggle-button">
+                <div class="option have active">Have</div>
+                <div class="option have-not">Have Not</div>
+            </div> -->
+            <div>
+                <label>The Need was submitted on:</label> <!-- DATE TEXT-->
+                <input type="date">
+            </div>
+            
+            <div>
+                <label for="start-date">The membership began on:</label> <!-- DATE TEXT-->
+                <input type="date" id="start-date" name="start-date">
+            </div>
+
+            <div id="result">Membership year:</div> <!-- Membership year since 2019-->
+
+            <div>
+                <label>Members IUA of $</label> <!-- 1k, 2.5k, 5k-->
+                <select>
+                    <option>1,000</option>
+                    <option>2,500</option>
+                    <option>5,000</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Member Age:</label> <!-- NUM TEXT -- if over 50+, then yes / no /unknown for tobacco-->
+                <input type="number" id="member-age">
+            </div>
+
+            <div id="tobaccoUser">
+                <label>Tobacco User:</label>
+                <input type="radio" name="tobacco"> Yes
+                <input type="radio" name="tobacco"> No
+                <input type="radio" name="tobacco"> Unknown
+            </div>
+            
+            <div id="isMinor">
+                <label>Minor's Parents Name:</label> <!-- TEXT only if member age is < 17 -->
+                <input type="text">
+            </div>
+            
+            <div class="selectors">
+                <label>PHI:</label> <!-- Yes / No , if member age < 17 not required-->
+                <button id="left1" class="toggle-btn left-side">Yes</button><button id="right1" class="toggle-btn right-side">No</button>
+            </div>
+            
+            <div class="selectors">
+                <label>HIPAA:</label> <!-- Yes / No -->
+                <button id="left2" class="toggle-btn left-side">Yes</button><button id="right2" class="toggle-btn right-side">No</button>
+            </div>
+            
+            <div class="selectors">
+                <label>Bridge:</label> <!-- Yes / No -- if answer is yes, then add another textbox for Expiration DATE TEXT-->
+                <button id="left3" class="toggle-btn left-side">Yes</button><button id="right3" class="toggle-btn right-side">No</button>
+                <br>
+                <p id="expiration-date"></p>
+            </div>
+        </div>
+
+        <div id="copiedInformation">
+            <h2>Zion's info</h2>
+            <div><input type="text" id="requestTitle" placeholder="TITLE"><br><br></div>
+
+            <div id="choice">
+                <span id="dateDisplay"></span>
+                <p>JaydenW - </p>
+                <select type="text" name="eligibility" id="eligibility">
+                    <option value="null">Choose one...</option>
+                    <option value="eligible">Eligible for Sharing</option>
+                    <option value="ineligible">Ineligible for Sharing</option>
+                    <option value="additional_info">Requires Additional Information</option>
+                </select>
+            </div>
+            
+            <div id="determination"><br>
+                <p>Medical Records&emsp;</p>
+                <button id="left4" class="toggle-btn left-side" value="have">Have</button><button id="right4" class="toggle-btn right-side" value="have not">Have Not</button>
+                <p>&emsp;been verified, and we are </p>
+                <select id="shareable">
+                    <option value="null">Choose one...</option>
+                    <option value="posDeter">able to share in this need.</option>
+                    <option value="posDeterCap">able to share in medical expenses after cap</option>
+                </select>
+                <select id="not-shareable">
+                    <option value="null">Choose one...</option>
+                    <option value="guideWatch">per pre-membership guidelines</option>
+                </select>
+                <select id="more-info">
+                    <option value="null">Choose one...</option>
+                    <option value="needRecords">pending medical records</option>
+                </select>
+            </div>
+
+            <div id="reasoning">
+                <textarea type="text" rows="10" cols="100"></textarea>
+            </div>
+
+            <div>
+                <p>Any other work-up/treatment that pertains to this need that is not what is listed above would need to be evaluated pending medical records to determine if it is shareable or not. </p>
+            </div>
+        </div>
+        <br>
+        <button id="copyButton" onclick="copyDivContent()">Copy Now!</button>
+    
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
