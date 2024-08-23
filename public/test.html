@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Example</title>
+</head>
+<body>
+    <form id="myForm">
+        <label for="name">First and Last Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message"></textarea><br><br>
+
+        <button type="button" onclick="copyFormData()">Copy Form Data</button>
+    </form>
+
+    <textarea id="output" rows="6" cols="40" readonly></textarea>
+
+    <script>
+        function copyFormData() {
+            // Get all form labels and corresponding inputs
+            const labels = document.querySelectorAll("#myForm label");
+            let formData = '';
+
+            labels.forEach(label => {
+                const inputId = label.getAttribute('for');
+                const inputElement = document.getElementById(inputId);
+                
+                // Get the label's text and the input's value
+                const labelText = label.innerHTML;
+                const inputValue = inputElement.value;
+                
+                // Add to formData string
+                formData += `${labelText} ${inputValue}\n`;
+            });
+
+            // Display the data in the textarea
+            const output = document.getElementById("output");
+            output.value = formData;
+
+            // Copy the data to the clipboard
+            navigator.clipboard.writeText(formData)
+                .then(() => {
+                    alert("Form data copied to clipboard!");
+                })
+                .catch(err => {
+                    alert("Failed to copy: ", err);
+                });
+        }
+    </script>
+</body>
+</html>
