@@ -9,13 +9,13 @@ body {
 
 /* Light Theme (Default) */
 body.light-theme {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #c6d7de;
+    color: #333;
 }
 
 /* Dark Theme */
 body.dark-theme {
-    background-color: #000000;
+    background-color: #333;
     color: #ffffff;
 }
 
@@ -113,13 +113,13 @@ h2 {
 }
 
 .left-side.active {
-    background-color: #333;
+    background-color: #266289;
     color: white;
     border-radius: 10px 0 0 10px;
 }
 
 .right-side.active {
-    background-color: #333;
+    background-color: #266289;
     color: white; 
     border-radius: 0 10px 10px 0;
 }
