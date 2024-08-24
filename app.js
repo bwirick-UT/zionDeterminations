@@ -256,6 +256,8 @@ function copyDivContent() {
         })
     })
 
+    content += `\n${document.getElementById('final-statement').innerHTML}`;
+
     /* div.childNodes.forEach(node => {
          if (node.nodeType === Node.ELEMENT_NODE) {
             console.log(node);
