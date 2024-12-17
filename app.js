@@ -228,7 +228,7 @@ function copyDivContent() {
         node.childNodes.forEach(g_node => {
             if (g_node.nodeType === Node.ELEMENT_NODE) {
                 console.log(g_node, g_node.nodeType, g_node.nodeName);
-                if (g_node.tagName === 'INPUT' || g_node.tagName === 'TEXTAREA') {
+                if (g_node.tagName === 'TEXTAREA') {
                     content += g_node.value + '\n\n';
                 } else if (g_node.tagName === 'SELECT') {
                     const displayStyle = window.getComputedStyle(g_node).display;
