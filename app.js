@@ -284,6 +284,35 @@ function copyDivContent() {
                 });
 
 }
+
+function getMedicalExpenseCap(years, isTobaccoUser) {
+    let cap;
+
+    if (isTobaccoUser) {
+        cap = 50000;
+    } else {
+        if (years >= 4) {
+            cap = 125000;
+        } else if (years === 3) {
+            cap = 50000;
+        } else if (years === 2) {
+            cap = 25000;
+        } else {
+            cap = 0; // Assuming no cap for less than 2 years
+        }
+    }
+
+    return cap;
+}
+
+function updateMedicalExpenseText(years, isTobaccoUser) {
+    const cap = getMedicalExpenseCap(years, isTobaccoUser);
+    const lastAnniversary = getLastAnniversary(years); // Assuming this is a function that calculates the last anniversary date
+    const text = `able to share in medical expenses after ${lastAnniversary} with a cap of $${cap}`;
+    document.getElementById('medicalExpenseText').innerText = text;
+}
+
+
 // Need an error collection function to call for issues. Find a way to pass through issue IDs
 // For example 
 
