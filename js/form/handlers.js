@@ -1,12 +1,7 @@
 // Event handlers and form logic
-import { parseStartDate, isValidStartDate } from './validation.js';
-import {
-    displayMembershipYear,
-    toggleTobaccoUserSection,
-    toggleMinorSection,
-    toggleExpirationDate,
-    updateEligibilitySections
-} from './render.js';
+import { parseStartDate, isValidStartDate, getOrdinalSuffix } from './validation.js';
+import { displayMembershipYear } from './render.js';
+import { updateExpirationDate } from './toggles.js';
 
 /**
  * Initializes toggle buttons
@@ -104,32 +99,209 @@ function calculateMembershipYear() {
 }
 
 /**
- * Handles member age input changes
- * @param {Event} event - The input event
+ * Handles start date input changes
  */
-function handleMemberAgeChange(event) {
-    const memberAge = document.getElementById('member-age').value;
-    if (memberAge < 50 && memberAge >= 0) {
-        clearTimeout(window.delayTimeout);
-        toggleTobaccoUserSection(memberAge);
-        window.delayTimeout = setTimeout(() => toggleMinorSection(memberAge), 1000);
-    } else if (memberAge >= 50) {
-        clearTimeout(window.delayTimeout);
-        window.delayTimeout = setTimeout(() => toggleTobaccoUserSection(memberAge), 500);
+function handleStartDateChange() {
+    console.log("Start date changed");
+    // Clear any existing timeout to avoid multiple calculations
+    clearTimeout(window.delayTimeout);
+
+    // Set a new timeout for 1 second
+    window.delayTimeout = setTimeout(function() {
+        // Get the date from the input field
+        const startDateString = document.getElementById('start-date').value;
+
+        if (!startDateString) {
+            document.getElementById('result').textContent = "Please enter a valid start date.";
+            return;
+        }
+
+        // Split the date string into components
+        const [year, month, day] = startDateString.split('-').map(Number);
+
+        // Create a new Date object
+        const startDate = new Date(year, month - 1, day);
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Check if the start date is valid
+        if (isNaN(startDate) || startDate > currentDate || startDate.getFullYear() < 2019) {
+            document.getElementById('result').textContent = "Please enter a valid start date.";
+            return;
+        }
+
+        // Calculate the difference in years
+        let membershipYear = currentDate.getFullYear() - startDate.getFullYear();
+
+        // Adjust if the current date is before the start date anniversary this year
+        const currentMonth = currentDate.getMonth();
+        const startMonth = startDate.getMonth();
+        const currentDay = currentDate.getDate();
+        const startDay = startDate.getDate();
+
+        if (
+            currentMonth < startMonth ||
+            (currentMonth === startMonth && currentDay < startDay)
+        ) {
+            membershipYear--;
+        }
+
+        // Output the membership year
+        document.getElementById('result').textContent =
+            `Membership year: ${membershipYear + 1}${getOrdinalSuffix(membershipYear + 1)}`;
+
+        // Update expiration date if bridge is active
+        if (document.getElementById('left3').classList.contains('active')) {
+            updateExpirationDate();
+        }
+
+        // Update anniversary and cap if "after cap" is selected
+        const shareableSelect = document.getElementById('shareable');
+        if (shareableSelect.style.display === 'inline' &&
+            shareableSelect.value === 'posDeterCap') {
+            updateAnniversaryAndCap();
+            document.getElementById('anniversaryAndCap').style.display = 'inline';
+        }
+    }, 1000);
+}
+
+/**
+ * Calculates medical expense cap based on membership year and tobacco use
+ * @param {number} membershipYear - The membership year
+ * @param {boolean} isTobaccoUser - Whether the member is a tobacco user
+ * @returns {number} The calculated cap amount
+ */
+function calculateMedicalExpenseCap(membershipYear, isTobaccoUser) {
+    // Define cap values
+    const CAPS = {
+        YEAR_2: 25000,
+        YEAR_3: 50000,
+        YEAR_4_PLUS: 125000,
+        TOBACCO_USER: 50000
+    };
+
+    let cap;
+
+    if (isTobaccoUser) {
+        cap = CAPS.TOBACCO_USER;
     } else {
-        toggleTobaccoUserSection(memberAge);
-        toggleMinorSection(memberAge);
+        if (membershipYear >= 4) {
+            cap = CAPS.YEAR_4_PLUS;
+        } else if (membershipYear === 3) {
+            cap = CAPS.YEAR_3;
+        } else if (membershipYear === 2) {
+            cap = CAPS.YEAR_2;
+        } else {
+            cap = 0; // No cap for less than 2 years
+        }
+    }
+
+    return cap;
+}
+
+/**
+ * Calculates the last anniversary date
+ * @param {Date} startDate - The membership start date
+ * @returns {Date} The last anniversary date
+ */
+function calculateLastAnniversaryDate(startDate) {
+    const currentDate = new Date();
+
+    // Get the month and day from the start date
+    const startMonth = startDate.getMonth();
+    const startDay = startDate.getDate();
+
+    // Create a date for this year's anniversary
+    const thisYearAnniversary = new Date(currentDate.getFullYear(), startMonth, startDay);
+
+    // If the anniversary hasn't occurred yet this year, use last year's anniversary
+    if (currentDate < thisYearAnniversary) {
+        return new Date(currentDate.getFullYear() - 1, startMonth, startDay);
+    } else {
+        return thisYearAnniversary;
     }
 }
 
 /**
- * Handles eligibility selection changes
- * @param {Event} event - The change event
+ * Formats a date as MM/DD/YYYY
+ * @param {Date} date - The date to format
+ * @returns {string} The formatted date string
  */
-function handleEligibilityChange(event) {
-    const selectedChoice = event.target.value;
-    updateEligibilitySections(selectedChoice);
+function formatDate(date) {
+    const month = date.getMonth() + 1; // getMonth() is zero-based
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    return `${month}/${day}/${year}`;
 }
+
+/**
+ * Updates the anniversary and cap display
+ * @returns {Object|undefined} The cap information or undefined if unable to calculate
+ */
+function updateAnniversaryAndCap() {
+    // Get the start date
+    const startDateString = document.getElementById('start-date').value;
+    if (!startDateString) return;
+
+    // Parse the start date
+    const [year, month, day] = startDateString.split('-').map(Number);
+    const startDate = new Date(year, month - 1, day);
+
+    // Get membership year from the result text
+    const resultText = document.getElementById('result').textContent;
+    const match = resultText.match(/Membership year: (\d+)/);
+
+    if (!match) return;
+
+    const membershipYear = parseInt(match[1]);
+
+    // Check if tobacco user (if age >= 50)
+    let isTobaccoUser = false;
+    const memberAge = document.getElementById('member-age').value;
+    if (memberAge >= 50) {
+        const tobaccoRadios = document.querySelectorAll('input[name="tobacco"]');
+        for (const radio of tobaccoRadios) {
+            if (radio.checked && radio.nextSibling.textContent.trim() === 'Yes') {
+                isTobaccoUser = true;
+                break;
+            }
+        }
+    }
+
+    // Calculate cap
+    const cap = calculateMedicalExpenseCap(membershipYear, isTobaccoUser);
+
+    // Format cap as currency
+    const formattedCap = cap.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+
+    // Calculate the last anniversary date
+    const lastAnniversaryDate = calculateLastAnniversaryDate(startDate);
+    const formattedAnniversaryDate = formatDate(lastAnniversaryDate);
+
+    // Update the display
+    const displayElement = document.getElementById('anniversaryAndCap');
+    displayElement.textContent = ` ${formattedAnniversaryDate} with a cap of ${formattedCap}`;
+    displayElement.style.display = 'inline'; // Ensure it's visible
+
+    return {
+        membershipYear,
+        cap,
+        formattedCap,
+        lastAnniversaryDate,
+        formattedAnniversaryDate
+    };
+}
+
+// Member age handling is now in member.js
+
+// Eligibility selection is now handled in eligibility.js
 
 /**
  * Checks if medical records are verified
@@ -170,49 +342,108 @@ function clearClipboard() {
  */
 function copyDivContent() {
     clearClipboard();
-    const container = document.getElementById('copiedInformation');
     let content = '';
     const currentDate = new Date().toLocaleDateString();
 
-    // Loop through all the child elements of the div
-    container.childNodes.forEach(node => {
-        node.childNodes.forEach(g_node => {
-            if (g_node.nodeType === Node.ELEMENT_NODE) {
-                console.log(g_node, g_node.nodeType, g_node.nodeName);
-                if (g_node.tagName === 'TEXTAREA') {
-                    content += g_node.value + '\n\n';
-                } else if (g_node.tagName === 'SELECT') {
-                    const displayStyle = window.getComputedStyle(g_node).display;
-                    if (displayStyle === 'none') {
-                        console.log('SELECT was: ' + displayStyle)
-                        return;
-                    }
-                    content += g_node.options[g_node.selectedIndex].innerHTML + '\n\n';
-                } else if (g_node.tagName === 'SPAN') {
-                    content += currentDate + " ";
-                } else if (g_node.tagName === 'P') {
-                    content += g_node.innerHTML;
-                } else if (g_node.tagName === 'BUTTON') {
-                    if (g_node.classList.contains('active')) {
-                        content += verifiedRecords();
-                    } else {
-                        return;
-                    }
-                } else if (g_node.tagName === 'BR') {
-                    return;
+    // Get title
+    const titleInput = document.getElementById('requestTitle');
+    if (titleInput && titleInput.value.trim()) {
+        content += titleInput.value + '\n\n';
+    }
+
+    // Get date, name, and eligibility in one line
+    content += currentDate + ' ';
+
+    // Get JaydenW text
+    const choiceDiv = document.getElementById('choice');
+    if (choiceDiv) {
+        const paragraphs = choiceDiv.querySelectorAll('p');
+        paragraphs.forEach(p => {
+            content += p.innerHTML + ' ';
+        });
+    }
+
+    // Get eligibility status
+    const eligibilitySelect = document.getElementById('eligibility');
+    if (eligibilitySelect && eligibilitySelect.selectedIndex > 0) {
+        content += eligibilitySelect.options[eligibilitySelect.selectedIndex].innerHTML;
+    }
+
+    // Check if determination placeholder is visible
+    const placeholderDiv = document.getElementById('determination-placeholder');
+    if (placeholderDiv && window.getComputedStyle(placeholderDiv).display !== 'none') {
+        // Add placeholder text
+        const placeholderText = placeholderDiv.querySelector('p');
+        if (placeholderText) {
+            content += '\n\n' + placeholderText.innerHTML;
+        }
+    } else {
+        // Add determination content
+        content += '\n\n';
+
+        // Add "Medical Records" text
+        content += 'Medical Records ';
+
+        // Add verified records if applicable
+        const verifiedButton = document.getElementById('left4');
+        const notVerifiedButton = document.getElementById('right4');
+        if (verifiedButton && verifiedButton.classList.contains('active')) {
+            content += verifiedButton.value;
+        } else if (notVerifiedButton && notVerifiedButton.classList.contains('active')) {
+            content += notVerifiedButton.value;
+        }
+
+        // Add the rest of the determination text
+        content += ' been verified, and we are ';
+
+        // Handle different eligibility options and their related elements
+        const shareableSelect = document.getElementById('shareable');
+        const notShareableSelect = document.getElementById('not-shareable');
+        const moreInfoSelect = document.getElementById('more-info');
+
+        // Add shareable content if visible and selected
+        if (shareableSelect && window.getComputedStyle(shareableSelect).display !== 'none' && shareableSelect.selectedIndex > 0) {
+            content += shareableSelect.options[shareableSelect.selectedIndex].innerHTML;
+
+            // Add anniversary and cap information if applicable
+            if (shareableSelect.value === 'posDeterCap') {
+                const anniversaryAndCap = document.getElementById('anniversaryAndCap');
+                if (anniversaryAndCap && window.getComputedStyle(anniversaryAndCap).display !== 'none') {
+                    content += anniversaryAndCap.textContent;
                 }
             }
-        });
-    });
+        }
 
-    content += `\n${document.getElementById('final-statement').innerHTML}`;
+        // Add not shareable content if visible and selected
+        if (notShareableSelect && window.getComputedStyle(notShareableSelect).display !== 'none' && notShareableSelect.selectedIndex > 0) {
+            content += notShareableSelect.options[notShareableSelect.selectedIndex].innerHTML;
+        }
 
+        // Add more info content if visible and selected
+        if (moreInfoSelect && window.getComputedStyle(moreInfoSelect).display !== 'none' && moreInfoSelect.selectedIndex > 0) {
+            content += moreInfoSelect.options[moreInfoSelect.selectedIndex].innerHTML;
+        }
+    }
+
+    // Add reasoning text (only if it has content)
+    const reasoningTextarea = document.querySelector('#reasoning textarea');
+    if (reasoningTextarea && reasoningTextarea.value.trim()) {
+        content += '\n\n' + reasoningTextarea.value;
+    }
+
+    // Add final statement
+    const finalStatement = document.getElementById('final-statement');
+    if (finalStatement) {
+        content += '\n\n' + finalStatement.innerHTML;
+    }
+
+    // Copy to clipboard
     navigator.clipboard.writeText(content)
         .then(() => {
             alert("Container content copied to clipboard!");
         })
         .catch(err => {
-            alert("Failed to copy: ", err);
+            alert("Failed to copy: " + err);
         });
 }
 
@@ -220,9 +451,12 @@ export {
     initToggleButtons,
     switchActive,
     calculateMembershipYear,
-    handleMemberAgeChange,
-    handleEligibilityChange,
     verifiedRecords,
     clearClipboard,
-    copyDivContent
+    copyDivContent,
+    calculateMedicalExpenseCap,
+    calculateLastAnniversaryDate,
+    formatDate,
+    updateAnniversaryAndCap,
+    handleStartDateChange
 };

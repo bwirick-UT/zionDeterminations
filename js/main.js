@@ -1,22 +1,46 @@
 // Main entry point for the application
-// Import only what's needed for global exports
-import { calculateMembershipYear } from './form/handlers.js';
+import { copyDivContent, handleStartDateChange } from './form/handlers.js';
+import { initThemeToggle } from './form/theme.js';
+import { initToggleButtons } from './form/toggles.js';
+import { initEligibilityHandlers } from './form/eligibility.js';
+import { initMemberHandlers } from './form/member.js';
 import { getOrdinalSuffix } from './form/validation.js';
-
-// Theme is initialized in the HTML with class="light-theme" on the body element
-console.log('Theme should be initialized via HTML');
+import { calculateMembershipYear } from './form/handlers.js';
 
 // Initialize the application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Initializing application...');
+
     // Display current date
     const currentDate = new Date().toLocaleDateString();
     document.getElementById('dateDisplay').innerHTML = currentDate;
 
-    // Note: All event listeners are now initialized via inline script
-    console.log('All event listeners should be initialized via inline script');
-});
+    // Initialize theme toggle
+    initThemeToggle();
 
-// Note: All event listeners are now handled by the inline script in the HTML
+    // Initialize toggle buttons
+    initToggleButtons();
+
+    // Initialize eligibility handlers
+    initEligibilityHandlers();
+
+    // Initialize member handlers
+    initMemberHandlers();
+
+    // Initialize start date handler
+    const startDateInput = document.getElementById('start-date');
+    if (startDateInput) {
+        startDateInput.addEventListener('input', handleStartDateChange);
+    }
+
+    // Add event listener for the copy button
+    const copyButton = document.getElementById('copyButton');
+    if (copyButton) {
+        copyButton.addEventListener('click', copyDivContent);
+    }
+
+    console.log('All event listeners initialized via main.js');
+});
 
 // Export any functions that might be needed globally
 export {

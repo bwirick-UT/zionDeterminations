@@ -17,100 +17,107 @@
             </div>
         </div>
 
-        <div id="insiderInformation">
-            <h2>Specialist's Info</h2>
-            <!-- <div class="toggle-button">
-                <div class="option have active">Have</div>
-                <div class="option have-not">Have Not</div>
-            </div> -->
-            <div>
-                <label>The Need was submitted on:</label> <!-- DATE TEXT-->
-                <input type="date">
+        <div class="top-row-container">
+            <div id="insiderInformation">
+                <h2>Specialist's Info</h2>
+                <!-- <div class="toggle-button">
+                    <div class="option have active">Have</div>
+                    <div class="option have-not">Have Not</div>
+                </div> -->
+                <div>
+                    <label>The Need was submitted on:</label> <!-- DATE TEXT-->
+                    <input type="date">
+                </div>
+
+                <div>
+                    <label for="start-date">The membership began on:</label> <!-- DATE TEXT-->
+                    <input type="date" id="start-date" name="start-date">
+                </div>
+
+                <div id="result">Membership year:</div> <!-- Membership year since 2019-->
+
+                <div>
+                    <label>Members IUA of $</label> <!-- 1k, 2.5k, 5k-->
+                    <select>
+                        <option>1,000</option>
+                        <option>2,500</option>
+                        <option>5,000</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Member Age:</label> <!-- NUM TEXT -- if over 50+, then yes / no /unknown for tobacco-->
+                    <input type="number" id="member-age">
+                </div>
+
+                <div id="tobaccoUser">
+                    <label>Tobacco User:</label>
+                    <input type="radio" name="tobacco" value="yes"> Yes
+                    <input type="radio" name="tobacco" value="no"> No
+                    <input type="radio" name="tobacco" value="unknown"> Unknown
+                </div>
+
+                <div id="isMinor">
+                    <label>Minor's Parents Name:</label> <!-- TEXT only if member age is < 17 -->
+                    <input type="text">
+                </div>
+
+                <div class="selectors">
+                    <label>PHI:</label> <!-- Yes / No , if member age < 17 not required-->
+                    <button id="left1" class="toggle-btn left-side">Yes</button><button id="right1" class="toggle-btn right-side">No</button>
+                </div>
+
+                <div class="selectors">
+                    <label>Bridge:</label> <!-- Yes / No -- if answer is yes, then add another textbox for Expiration DATE TEXT-->
+                    <button id="left3" class="toggle-btn left-side">Yes</button><button id="right3" class="toggle-btn right-side">No</button>
+                    <br>
+                    <p id="expiration-date"></p>
+                </div>
             </div>
 
-            <div>
-                <label for="start-date">The membership began on:</label> <!-- DATE TEXT-->
-                <input type="date" id="start-date" name="start-date">
-            </div>
+            <div id="copiedInformation">
+                <h2>Zion's Info</h2>
+                <div><input type="text" id="requestTitle" placeholder="TITLE"><br><br></div>
 
-            <div id="result">Membership year:</div> <!-- Membership year since 2019-->
+                <div id="choice">
+                    <span id="dateDisplay"></span>
+                    <p>JaydenW - </p>
+                    <select type="text" name="eligibility" id="eligibility">
+                        <option value="null">Select Eligibility Status...</option>
+                        <option value="eligible">Eligible for Sharing</option>
+                        <option value="ineligible">Ineligible for Sharing</option>
+                        <option value="additional_info">Requires Additional Information</option>
+                    </select>
+                </div>
 
-            <div>
-                <label>Members IUA of $</label> <!-- 1k, 2.5k, 5k-->
-                <select>
-                    <option>1,000</option>
-                    <option>2,500</option>
-                    <option>5,000</option>
-                </select>
-            </div>
+                <div id="determination-placeholder">
+                    <p>More information will be shown based on eligibility status selection.</p>
+                </div>
 
-            <div>
-                <label>Member Age:</label> <!-- NUM TEXT -- if over 50+, then yes / no /unknown for tobacco-->
-                <input type="number" id="member-age">
-            </div>
+                <div id="determination">
+                    <p>Medical Records&emsp;</p>
+                    <button id="left4" class="toggle-btn left-side" value="have">Have</button><button id="right4" class="toggle-btn right-side" value="have not">Have Not</button>
+                    <p>&emsp;been verified, and we are </p>
+                    <select id="shareable">
+                        <option value="null">Select sharing option...</option>
+                        <option value="posDeterCap">able to share in medical expenses after</option>
+                        <option value="posDeter">able to share in this need.</option>
+                    </select>
 
-            <div id="tobaccoUser">
-                <label>Tobacco User:</label>
-                <input type="radio" name="tobacco" value="yes"> Yes
-                <input type="radio" name="tobacco" value="no"> No
-                <input type="radio" name="tobacco" value="unknown"> Unknown
-            </div>
+                    <span id="anniversaryAndCap" style="display: none;"></span>
+                    <select id="not-shareable">
+                        <option value="null">Select ineligibility reason...</option>
+                        <option value="guideWatch">per pre-membership guidelines</option>
+                    </select>
+                    <select id="more-info">
+                        <option value="null">Select additional info needed...</option>
+                        <option value="needRecords">pending medical records</option>
+                    </select>
+                </div>
 
-            <div id="isMinor">
-                <label>Minor's Parents Name:</label> <!-- TEXT only if member age is < 17 -->
-                <input type="text">
-            </div>
-
-            <div class="selectors">
-                <label>PHI:</label> <!-- Yes / No , if member age < 17 not required-->
-                <button id="left1" class="toggle-btn left-side">Yes</button><button id="right1" class="toggle-btn right-side">No</button>
-            </div>
-
-            <div class="selectors">
-                <label>Bridge:</label> <!-- Yes / No -- if answer is yes, then add another textbox for Expiration DATE TEXT-->
-                <button id="left3" class="toggle-btn left-side">Yes</button><button id="right3" class="toggle-btn right-side">No</button>
-                <br>
-                <p id="expiration-date"></p>
-            </div>
-        </div>
-
-        <div id="copiedInformation">
-            <h2>Zion's Info</h2>
-            <div><input type="text" id="requestTitle" placeholder="TITLE"><br><br></div>
-
-            <div id="choice">
-                <span id="dateDisplay"></span>
-                <p>JaydenW - </p>
-                <select type="text" name="eligibility" id="eligibility">
-                    <option value="null">Choose one...</option>
-                    <option value="eligible">Eligible for Sharing</option>
-                    <option value="ineligible">Ineligible for Sharing</option>
-                    <option value="additional_info">Requires Additional Information</option>
-                </select>
-            </div>
-
-            <div id="determination"><br>
-                <p>Medical Records&emsp;</p>
-                <button id="left4" class="toggle-btn left-side" value="have">Have</button><button id="right4" class="toggle-btn right-side" value="have not">Have Not</button>
-                <p>&emsp;been verified, and we are </p>
-                <select id="shareable">
-                    <option value="null">Choose one...</option>
-                    <option value="posDeterCap">able to share in medical expenses after</option>
-                    <option value="posDeter">able to share in this need.</option>
-                </select>
-                <span id="anniversaryAndCap" style="display: none;"></span>
-                <select id="not-shareable">
-                    <option value="null">Choose one...</option>
-                    <option value="guideWatch">per pre-membership guidelines</option>
-                </select>
-                <select id="more-info">
-                    <option value="null">Choose one...</option>
-                    <option value="needRecords">pending medical records</option>
-                </select>
-            </div>
-
-            <div id="reasoning">
-                <textarea type="text" rows="10" cols="50"></textarea>
+                <div id="reasoning">
+                    <textarea type="text" rows="10" cols="50"></textarea>
+                </div>
             </div>
         </div>
 
@@ -122,421 +129,9 @@
 
         <div id="personalNotes">
             <h2>Personal Notes</h2>
-            <textarea type="text" rows="21" cols="53" placeholder="This is for personal notes, nothing here will be copied."></textarea>
+            <textarea type="text" rows="15" cols="50" placeholder="This is for personal notes, nothing here will be copied."></textarea>
         </div>
     </main>
-    <!-- Inline script to ensure all functionality works immediately -->
-    <script>
-        // Ensure all functionality works immediately
-        document.addEventListener('DOMContentLoaded', function() {
-            // Theme toggle
-            const themeToggle = document.getElementById('iosToggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('change', function() {
-                    if (this.checked) {
-                        document.body.classList.remove('light-theme');
-                        document.body.classList.add('dark-theme');
-                    } else {
-                        document.body.classList.remove('dark-theme');
-                        document.body.classList.add('light-theme');
-                    }
-                });
-            }
-
-            // Toggle buttons
-            const toggleButtons = document.querySelectorAll('.toggle-btn');
-            console.log('Found toggle buttons (inline):', toggleButtons.length);
-
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    // Get the ID of the clicked button
-                    const clickedButtonId = event.target.id;
-
-                    // Determine the paired button's ID
-                    let pairedButtonId;
-                    if (clickedButtonId.includes('left')) {
-                        pairedButtonId = clickedButtonId.replace('left', 'right');
-                    } else {
-                        pairedButtonId = clickedButtonId.replace('right', 'left');
-                    }
-
-                    // Get the buttons
-                    const clickedButton = document.getElementById(clickedButtonId);
-                    const pairedButton = document.getElementById(pairedButtonId);
-
-                    // Check if the clicked button is already active
-                    if (clickedButton.classList.contains('active')) {
-                        clickedButton.classList.remove('active');
-
-                        // Special handling for expiration date
-                        if (clickedButtonId === 'left3') {
-                            document.getElementById('expiration-date').style.display = 'none';
-                        }
-                        return;
-                    }
-
-                    // Toggle the 'active' class on both buttons
-                    clickedButton.classList.add('active');
-                    pairedButton.classList.remove('active');
-
-                    // Special handling for expiration date
-                    if (clickedButtonId === 'left3') {
-                        const expireTime = document.getElementById('expiration-date');
-                        expireTime.style.display = 'inline';
-
-                        // Get the start date
-                        const startDateString = document.getElementById('start-date').value;
-                        if (startDateString) {
-                            const [year, month, day] = startDateString.split('-').map(Number);
-                            const startDate = new Date(year, month - 1, day);
-                            expireTime.textContent = `Expiration Date: ${startDate.getMonth() + 1} / ${startDate.getDate()} / ${startDate.getFullYear() + 1}`;
-                        }
-                    } else if (clickedButtonId === 'right3') {
-                        document.getElementById('expiration-date').style.display = 'none';
-                    }
-                });
-            });
-
-            // Start date input
-            document.getElementById('start-date').addEventListener('input', function() {
-                console.log("Start date changed");
-                // Clear any existing timeout to avoid multiple calculations
-                clearTimeout(window.delayTimeout);
-
-                // Set a new timeout for 1 second
-                window.delayTimeout = setTimeout(function() {
-                    // Get the date from the input field
-                    const startDateString = document.getElementById('start-date').value;
-
-                    if (!startDateString) {
-                        document.getElementById('result').textContent = "Please enter a valid start date.";
-                        return;
-                    }
-
-                    // Split the date string into components
-                    const [year, month, day] = startDateString.split('-').map(Number);
-
-                    // Create a new Date object
-                    const startDate = new Date(year, month - 1, day);
-
-                    // Get the current date
-                    const currentDate = new Date();
-
-                    // Check if the start date is valid
-                    if (isNaN(startDate) || startDate > currentDate || startDate.getFullYear() < 2019) {
-                        document.getElementById('result').textContent = "Please enter a valid start date.";
-                        return;
-                    }
-
-                    // Calculate the difference in years
-                    let membershipYear = currentDate.getFullYear() - startDate.getFullYear();
-
-                    // Adjust if the current date is before the start date anniversary this year
-                    const currentMonth = currentDate.getMonth();
-                    const startMonth = startDate.getMonth();
-                    const currentDay = currentDate.getDate();
-                    const startDay = startDate.getDate();
-
-                    if (
-                        currentMonth < startMonth ||
-                        (currentMonth === startMonth && currentDay < startDay)
-                    ) {
-                        membershipYear--;
-                    }
-
-                    // Get ordinal suffix
-                    const getOrdinalSuffix = function(n) {
-                        const s = ["th", "st", "nd", "rd"],
-                              v = n % 100;
-                        return s[(v - 20) % 10] || s[v] || s[0];
-                    };
-
-                    // Output the membership year
-                    document.getElementById('result').textContent =
-                        `Membership year: ${membershipYear + 1}${getOrdinalSuffix(membershipYear + 1)}`;
-
-                    // Update expiration date if bridge is active
-                    if (document.getElementById('left3').classList.contains('active')) {
-                        const expireTime = document.getElementById('expiration-date');
-                        expireTime.style.display = 'inline';
-                        expireTime.textContent = `Expiration Date: ${startDate.getMonth() + 1} / ${startDate.getDate()} / ${startDate.getFullYear() + 1}`;
-                    }
-
-                    // Update anniversary and cap if "after cap" is selected
-                    const shareableSelect = document.getElementById('shareable');
-                    if (shareableSelect.style.display === 'inline' &&
-                        shareableSelect.value === 'posDeterCap') {
-                        updateAnniversaryAndCap();
-                        document.getElementById('anniversaryAndCap').style.display = 'inline';
-                    }
-                }, 1000);
-            });
-
-            // Member age input
-            document.getElementById('member-age').addEventListener('input', function() {
-                const memberAge = this.value;
-                console.log("Member age changed to:", memberAge);
-
-                // Handle tobacco user section
-                if (memberAge >= 50) {
-                    document.getElementById('tobaccoUser').style.display = 'inline';
-                } else {
-                    document.getElementById('tobaccoUser').style.display = 'none';
-                }
-
-                // Handle minor section
-                if (memberAge < 18 && memberAge >= 0) {
-                    document.getElementById('isMinor').style.display = 'inline';
-                } else {
-                    document.getElementById('isMinor').style.display = 'none';
-                }
-
-                // Update anniversary and cap if needed
-                const shareableSelect = document.getElementById('shareable');
-                if (shareableSelect.style.display === 'inline' &&
-                    shareableSelect.value === 'posDeterCap') {
-                    updateAnniversaryAndCap();
-                }
-            });
-
-            // Function to calculate medical expense cap
-            function calculateMedicalExpenseCap(membershipYear, isTobaccoUser) {
-                // Define cap values
-                const CAPS = {
-                    YEAR_2: 25000,
-                    YEAR_3: 50000,
-                    YEAR_4_PLUS: 125000,
-                    TOBACCO_USER: 50000
-                };
-
-                let cap;
-
-                if (isTobaccoUser) {
-                    cap = CAPS.TOBACCO_USER;
-                } else {
-                    if (membershipYear >= 4) {
-                        cap = CAPS.YEAR_4_PLUS;
-                    } else if (membershipYear === 3) {
-                        cap = CAPS.YEAR_3;
-                    } else if (membershipYear === 2) {
-                        cap = CAPS.YEAR_2;
-                    } else {
-                        cap = 0; // No cap for less than 2 years
-                    }
-                }
-
-                return cap;
-            }
-
-            // Function to calculate the last anniversary date
-            function calculateLastAnniversaryDate(startDate) {
-                const currentDate = new Date();
-
-                // Get the month and day from the start date
-                const startMonth = startDate.getMonth();
-                const startDay = startDate.getDate();
-
-                // Create a date for this year's anniversary
-                const thisYearAnniversary = new Date(currentDate.getFullYear(), startMonth, startDay);
-
-                // If the anniversary hasn't occurred yet this year, use last year's anniversary
-                if (currentDate < thisYearAnniversary) {
-                    return new Date(currentDate.getFullYear() - 1, startMonth, startDay);
-                } else {
-                    return thisYearAnniversary;
-                }
-            }
-
-            // Function to format a date as MM/DD/YYYY
-            function formatDate(date) {
-                const month = date.getMonth() + 1; // getMonth() is zero-based
-                const day = date.getDate();
-                const year = date.getFullYear();
-
-                return `${month}/${day}/${year}`;
-            }
-
-            // Function to update medical expense cap and anniversary date display
-            function updateAnniversaryAndCap() {
-                // Get the start date
-                const startDateString = document.getElementById('start-date').value;
-                if (!startDateString) return;
-
-                // Parse the start date
-                const [year, month, day] = startDateString.split('-').map(Number);
-                const startDate = new Date(year, month - 1, day);
-
-                // Get membership year from the result text
-                const resultText = document.getElementById('result').textContent;
-                const match = resultText.match(/Membership year: (\d+)/);
-
-                if (!match) return;
-
-                const membershipYear = parseInt(match[1]);
-
-                // Check if tobacco user (if age >= 50)
-                let isTobaccoUser = false;
-                const memberAge = document.getElementById('member-age').value;
-                if (memberAge >= 50) {
-                    const tobaccoRadios = document.querySelectorAll('input[name="tobacco"]');
-                    for (const radio of tobaccoRadios) {
-                        if (radio.checked && radio.nextSibling.textContent.trim() === 'Yes') {
-                            isTobaccoUser = true;
-                            break;
-                        }
-                    }
-                }
-
-                // Calculate cap
-                const cap = calculateMedicalExpenseCap(membershipYear, isTobaccoUser);
-
-                // Format cap as currency
-                const formattedCap = cap.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                });
-
-                // Calculate the last anniversary date
-                const lastAnniversaryDate = calculateLastAnniversaryDate(startDate);
-                const formattedAnniversaryDate = formatDate(lastAnniversaryDate);
-
-                // Update the display
-                const displayElement = document.getElementById('anniversaryAndCap');
-                displayElement.textContent = ` ${formattedAnniversaryDate} with a cap of ${formattedCap}`;
-
-                return {
-                    membershipYear,
-                    cap,
-                    formattedCap,
-                    lastAnniversaryDate,
-                    formattedAnniversaryDate
-                };
-            }
-
-            // Tobacco user radio buttons
-            document.querySelectorAll('input[name="tobacco"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    // Update anniversary and cap if needed
-                    const shareableSelect = document.getElementById('shareable');
-                    if (shareableSelect.style.display === 'inline' &&
-                        shareableSelect.value === 'posDeterCap') {
-                        updateAnniversaryAndCap();
-                    }
-                });
-            });
-
-            // Eligibility selection
-            document.getElementById('eligibility').addEventListener('change', function() {
-                const selectedChoice = this.value;
-                console.log("Eligibility changed to:", selectedChoice);
-
-                if (selectedChoice === 'eligible') {
-                    document.getElementById('shareable').style.display = 'inline';
-                    document.getElementById('not-shareable').style.display = 'none';
-                    document.getElementById('more-info').style.display = 'none';
-                } else if (selectedChoice === 'ineligible') {
-                    document.getElementById('shareable').style.display = 'none';
-                    document.getElementById('not-shareable').style.display = 'inline';
-                    document.getElementById('more-info').style.display = 'none';
-                } else if (selectedChoice === 'additional_info') {
-                    document.getElementById('shareable').style.display = 'none';
-                    document.getElementById('not-shareable').style.display = 'none';
-                    document.getElementById('more-info').style.display = 'inline';
-                }
-
-                // Hide the anniversary and cap display when eligibility changes
-                document.getElementById('anniversaryAndCap').style.display = 'none';
-            });
-
-            // Shareable selection
-            document.getElementById('shareable').addEventListener('change', function() {
-                const selectedValue = this.value;
-                const displayElement = document.getElementById('anniversaryAndCap');
-
-                if (selectedValue === 'posDeterCap') {
-                    // Update and show the anniversary and cap
-                    updateAnniversaryAndCap();
-                    displayElement.style.display = 'inline';
-                } else {
-                    // Hide the anniversary and cap
-                    displayElement.style.display = 'none';
-                }
-            });
-
-            // Copy button
-            const copyButton = document.getElementById('copyButton');
-            if (copyButton) {
-                copyButton.addEventListener('click', function() {
-                    // Clear clipboard first
-                    navigator.clipboard.writeText('')
-                        .then(() => {
-                            console.log("Clipboard cleared");
-
-                            // Copy content
-                            const container = document.getElementById('copiedInformation');
-                            let content = '';
-                            const currentDate = new Date().toLocaleDateString();
-
-                            // Loop through all the child elements of the div
-                            container.childNodes.forEach(node => {
-                                node.childNodes.forEach(g_node => {
-                                    if (g_node.nodeType === Node.ELEMENT_NODE) {
-                                        if (g_node.tagName === 'TEXTAREA') {
-                                            content += g_node.value + '\n\n';
-                                        } else if (g_node.tagName === 'SELECT') {
-                                            const displayStyle = window.getComputedStyle(g_node).display;
-                                            if (displayStyle === 'none') {
-                                                return;
-                                            }
-
-                                            // Get the selected option text
-                                            const selectedOptionText = g_node.options[g_node.selectedIndex].innerHTML;
-                                            content += selectedOptionText;
-
-                                            // If this is the shareable select and "after cap" is selected, add the anniversary and cap info
-                                            if (g_node.id === 'shareable' && g_node.value === 'posDeterCap') {
-                                                const displayElement = document.getElementById('anniversaryAndCap');
-                                                if (displayElement && displayElement.style.display !== 'none') {
-                                                    content += displayElement.textContent;
-                                                }
-                                            }
-
-                                            content += '\n\n';
-                                        } else if (g_node.tagName === 'SPAN') {
-                                            content += currentDate + " ";
-                                        } else if (g_node.tagName === 'P') {
-                                            content += g_node.innerHTML;
-                                        } else if (g_node.tagName === 'BUTTON') {
-                                            if (g_node.classList.contains('active')) {
-                                                const left_clicked = document.getElementById('left4');
-                                                const right_clicked = document.getElementById('right4');
-                                                if (left_clicked.classList.contains('active')) {
-                                                    content += left_clicked.value;
-                                                } else if (right_clicked.classList.contains('active')) {
-                                                    content += right_clicked.value;
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
-                            });
-
-                            content += `\n${document.getElementById('final-statement').innerHTML}`;
-
-                            navigator.clipboard.writeText(content)
-                                .then(() => {
-                                    alert("Container content copied to clipboard!");
-                                })
-                                .catch(err => {
-                                    alert("Failed to copy: " + err);
-                                });
-                        });
-                });
-            }
-        });
-    </script>
 
     <!-- Main application script -->
     <script type="module" src="js/main.js"></script>
