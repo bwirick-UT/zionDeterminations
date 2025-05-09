@@ -62,16 +62,44 @@
                     <input type="text">
                 </div>
 
-                <div class="selectors">
-                    <label>PHI:</label> <!-- Yes / No , if member age < 17 not required-->
-                    <button id="left1" class="toggle-btn left-side">Yes</button><button id="right1" class="toggle-btn right-side">No</button>
-                </div>
+                <div class="selectors-container">
+                    <div class="toggle-selectors">
+                        <div class="selectors">
+                            <label>PHI:</label> <!-- Yes / No , if member age < 17 not required-->
+                            <button id="left1" class="toggle-btn left-side">Yes</button><button id="right1" class="toggle-btn right-side">No</button>
+                        </div>
 
-                <div class="selectors">
-                    <label>Bridge:</label> <!-- Yes / No -- if answer is yes, then add another textbox for Expiration DATE TEXT-->
-                    <button id="left3" class="toggle-btn left-side">Yes</button><button id="right3" class="toggle-btn right-side">No</button>
-                    <br>
-                    <p id="expiration-date"></p>
+                        <div class="selectors">
+                            <label>Bridge:</label> <!-- Yes / No -- if answer is yes, then add another textbox for Expiration DATE TEXT-->
+                            <button id="left3" class="toggle-btn left-side">Yes</button><button id="right3" class="toggle-btn right-side">No</button>
+                            <br>
+                            <p id="expiration-date"></p>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-selectors">
+                        <h3>Additional Selectors</h3>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="shareable-services" name="shareable-services">
+                            <label for="shareable-services">Shareable services</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="not-shareable-services" name="not-shareable-services">
+                            <label for="not-shareable-services">Not shareable services</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="six-months" name="six-months">
+                            <label for="six-months">Six Months</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pending-phi" name="pending-phi">
+                            <label for="pending-phi">Pending PHI</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="additional-iua" name="additional-iua">
+                            <label for="additional-iua">Additional IUA</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -116,7 +144,34 @@
                 </div>
 
                 <div id="reasoning">
-                    <textarea type="text" rows="10" cols="50"></textarea>
+                    <!-- Additional IUA section -->
+                    <div id="additional-iua-container" style="display: none;">
+                        <p>Services are being done for
+                            <input type="text" id="additional-iua-input" placeholder="additional areas">,
+                            for ease of processing requests will stay together, but member is subject to an additional IUA.
+                        </p>
+                    </div>
+
+                    <div id="bullet-lists-container">
+                        <!-- Bullet lists will be dynamically added here based on selected checkboxes -->
+                        <div id="shareable-services-list" class="bullet-list" style="display: none;">
+                            <h3>Shareable Services</h3>
+                            <div class="add-item-container">
+                                <input type="text" class="add-item-input" placeholder="Add a new item...">
+                                <button class="add-item-btn">Add</button>
+                            </div>
+                            <div class="list-items"></div>
+                        </div>
+
+                        <div id="not-shareable-services-list" class="bullet-list" style="display: none;">
+                            <h3>Not Shareable Services</h3>
+                            <div class="add-item-container">
+                                <input type="text" class="add-item-input" placeholder="Add a new item...">
+                                <button class="add-item-btn">Add</button>
+                            </div>
+                            <div class="list-items"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -129,7 +184,7 @@
 
         <div id="personalNotes">
             <h2>Personal Notes</h2>
-            <textarea type="text" rows="15" cols="50" placeholder="This is for personal notes, nothing here will be copied."></textarea>
+            <textarea type="text" rows="15" cols="50" placeholder="This is for personal notes, nothing here will be copied." spellcheck="true"></textarea>
         </div>
     </main>
 

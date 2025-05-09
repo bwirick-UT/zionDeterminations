@@ -109,6 +109,116 @@ h2 {
     margin-top: 20px;
 }
 
+/* Additional IUA styles */
+#additional-iua-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+#additional-iua-input {
+    display: inline-block;
+    width: auto;
+    min-width: 150px;
+    margin: 0 5px;
+}
+
+/* Bullet list styles */
+.bullet-list {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.bullet-list h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #266289;
+}
+
+.list-items {
+    margin-top: 15px;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.list-item-text {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.list-item-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.edit-item-btn, .delete-item-btn {
+    cursor: pointer;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.edit-item-btn:hover, .delete-item-btn:hover {
+    color: #266289;
+}
+
+.add-item-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.add-item-input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.add-item-btn {
+    padding: 8px 15px;
+    background-color: #266289;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-item-btn:hover {
+    background-color: #1a4a6e;
+}
+
+.edit-mode input {
+    flex: 1;
+    margin-right: 5px;
+}
+
+.save-edit-btn {
+    padding: 5px 10px;
+    background-color: #47CB8F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-edit-btn:hover {
+    background-color: #3aa775;
+}
+
 #personalNotes {
     width: 100%;
     padding: 15px;
@@ -344,4 +454,57 @@ textarea {
     margin-left: 5px;
     font-weight: bold;
     color: #266289;
+}
+
+/* Container for selectors and checkboxes */
+.selectors-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.toggle-selectors {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Style for checkbox selectors */
+.checkbox-selectors {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.checkbox-selectors h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-align: left;
+}
+
+.checkbox-item {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item input[type="checkbox"] {
+    margin-right: 8px;
+    width: auto;
+}
+
+.checkbox-item label {
+    display: inline;
+    margin-top: 0;
+    font-weight: normal;
+}
+
+/* Responsive adjustments for selectors container */
+@media (max-width: 600px) {
+    .selectors-container {
+        flex-direction: column;
+    }
 }

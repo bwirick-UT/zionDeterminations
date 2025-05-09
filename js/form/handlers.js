@@ -2,6 +2,7 @@
 import { parseStartDate, isValidStartDate, getOrdinalSuffix } from './validation.js';
 import { displayMembershipYear } from './render.js';
 import { updateExpirationDate } from './toggles.js';
+import { getListItems, isAdditionalIUAVisible, getAdditionalIUAText } from './bulletLists.js';
 
 /**
  * Initializes toggle buttons
@@ -237,6 +238,66 @@ function formatDate(date) {
 }
 
 /**
+ * Calculates the date 6 months prior to the submission date
+ * @returns {string} - Formatted date string (MM/DD/YYYY)
+ */
+function calculateSixMonthsPriorDate() {
+    // Get the submission date from the input
+    const submissionDateInput = document.querySelector('input[type="date"]:first-of-type');
+    let submissionDate;
+
+    if (submissionDateInput && submissionDateInput.value) {
+        // Parse the submission date from the input
+        const [year, month, day] = submissionDateInput.value.split('-').map(Number);
+        submissionDate = new Date(year, month - 1, day); // month is 0-indexed in JS Date
+    } else {
+        // If no submission date is provided, use the current date
+        submissionDate = new Date();
+    }
+
+    // Calculate date 6 months prior
+    const sixMonthsPriorDate = new Date(submissionDate);
+    sixMonthsPriorDate.setMonth(sixMonthsPriorDate.getMonth() - 6);
+
+    return formatDate(sixMonthsPriorDate);
+}
+
+/**
+ * Checks if the Six Months checkbox is checked
+ * @returns {boolean} - Whether the checkbox is checked
+ */
+function isSixMonthsChecked() {
+    const sixMonthsCheckbox = document.getElementById('six-months');
+    return sixMonthsCheckbox && sixMonthsCheckbox.checked;
+}
+
+/**
+ * Gets the Six Months guideline text with the calculated date
+ * @returns {string} - The formatted guideline text
+ */
+function getSixMonthsText() {
+    const sixMonthsPriorDate = calculateSixMonthsPriorDate();
+    return `We are unable to share into services prior to ${sixMonthsPriorDate} due to the six-month submission guideline.`;
+}
+
+/**
+ * Checks if the Pending PHI checkbox is checked
+ * @returns {boolean} - Whether the checkbox is checked
+ */
+function isPendingPHIChecked() {
+    const pendingPHICheckbox = document.getElementById('pending-phi');
+    return pendingPHICheckbox && pendingPHICheckbox.checked;
+}
+
+/**
+ * Gets the Pending PHI text
+ * @returns {string} - The formatted Pending PHI text
+ */
+function getPendingPHIText() {
+    return "Email pending PHI";
+}
+
+/**
  * Updates the anniversary and cap display
  * @returns {Object|undefined} The cap information or undefined if unable to calculate
  */
@@ -425,10 +486,43 @@ function copyDivContent() {
         }
     }
 
-    // Add reasoning text (only if it has content)
-    const reasoningTextarea = document.querySelector('#reasoning textarea');
-    if (reasoningTextarea && reasoningTextarea.value.trim()) {
-        content += '\n\n' + reasoningTextarea.value;
+    // Add Additional IUA text if visible
+    if (isAdditionalIUAVisible()) {
+        content += '\n\n' + getAdditionalIUAText();
+    }
+
+    // Add bullet list content from shareable services if visible
+    const shareableServicesList = document.getElementById('shareable-services-list');
+    if (shareableServicesList && window.getComputedStyle(shareableServicesList).display !== 'none') {
+        const items = getListItems('shareable-services-list');
+        if (items.length > 0) {
+            content += '\n\nShareable Services:';
+            items.forEach(item => {
+                content += '\n• ' + item;
+            });
+        }
+    }
+
+    // Add bullet list content from not shareable services if visible
+    const notShareableServicesList = document.getElementById('not-shareable-services-list');
+    if (notShareableServicesList && window.getComputedStyle(notShareableServicesList).display !== 'none') {
+        const items = getListItems('not-shareable-services-list');
+        if (items.length > 0) {
+            content += '\n\nNot Shareable Services:';
+            items.forEach(item => {
+                content += '\n• ' + item;
+            });
+        }
+    }
+
+    // Add Six Months text if the checkbox is checked
+    if (isSixMonthsChecked()) {
+        content += '\n\n' + getSixMonthsText();
+    }
+
+    // Add Pending PHI text if the checkbox is checked
+    if (isPendingPHIChecked()) {
+        content += '\n\n' + getPendingPHIText();
     }
 
     // Add final statement
@@ -440,7 +534,7 @@ function copyDivContent() {
     // Copy to clipboard
     navigator.clipboard.writeText(content)
         .then(() => {
-            alert("Container content copied to clipboard!");
+            alert("Container content copied to clipboard!\nBe sure to check the data after pasting.");
         })
         .catch(err => {
             alert("Failed to copy: " + err);
@@ -458,5 +552,10 @@ export {
     calculateLastAnniversaryDate,
     formatDate,
     updateAnniversaryAndCap,
-    handleStartDateChange
+    handleStartDateChange,
+    calculateSixMonthsPriorDate,
+    isSixMonthsChecked,
+    getSixMonthsText,
+    isPendingPHIChecked,
+    getPendingPHIText
 };

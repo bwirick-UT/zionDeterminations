@@ -6,6 +6,8 @@ import { initEligibilityHandlers } from './form/eligibility.js';
 import { initMemberHandlers } from './form/member.js';
 import { getOrdinalSuffix } from './form/validation.js';
 import { calculateMembershipYear } from './form/handlers.js';
+import { initCheckboxSelectors } from './form/checkboxes.js';
+import { initBulletLists } from './form/bulletLists.js';
 
 // Initialize the application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize member handlers
     initMemberHandlers();
+
+    // Initialize checkbox selectors
+    initCheckboxSelectors();
+
+    // Initialize bullet lists
+    initBulletLists();
 
     // Initialize start date handler
     const startDateInput = document.getElementById('start-date');
