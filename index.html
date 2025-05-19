@@ -62,8 +62,8 @@
                     <input type="text">
                 </div>
 
-                <div class="selectors-container">
-                    <div class="toggle-selectors">
+                <div class="selectors-container" style="display: flex; flex-wrap: wrap; gap: 15px;">
+                    <div class="toggle-selectors" style="flex: 1; min-width: 200px;">
                         <div class="selectors">
                             <label>PHI:</label> <!-- Yes / No , if member age < 17 not required-->
                             <button id="left1" class="toggle-btn left-side">Yes</button><button id="right1" class="toggle-btn right-side">No</button>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
 
-                    <div class="checkbox-selectors">
+                    <div class="checkbox-selectors" style="flex: 1; min-width: 200px;">
                         <h3>Additional Selectors</h3>
                         <div class="checkbox-item">
                             <input type="checkbox" id="shareable-services" name="shareable-services">
@@ -98,6 +98,10 @@
                         <div class="checkbox-item">
                             <input type="checkbox" id="additional-iua" name="additional-iua">
                             <label for="additional-iua">Additional IUA</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="maternity" name="maternity">
+                            <label for="maternity">Maternity</label>
                         </div>
                     </div>
                 </div>
@@ -152,6 +156,12 @@
                         </p>
                     </div>
 
+                    <div id="maternity-container" style="display: none;">
+                        <p>Shareable for services contained within the 'What Is Shareable' section of the Maternity Guidelines<br>
+                            edc; <input type="date" id="maternity-edc-date" placeholder="Estimated Due Date">
+                        </p>
+                    </div>
+
                     <div id="bullet-lists-container">
                         <!-- Bullet lists will be dynamically added here based on selected checkboxes -->
                         <div id="shareable-services-list" class="bullet-list" style="display: none;">
@@ -159,6 +169,7 @@
                             <div class="add-item-container">
                                 <input type="text" class="add-item-input" placeholder="Add a new item...">
                                 <button class="add-item-btn">Add</button>
+                                <button class="copy-list-btn" data-list="shareable-services-list" title="Copy Shareable Services List">Copy</button>
                             </div>
                             <div class="list-items"></div>
                         </div>
@@ -168,6 +179,7 @@
                             <div class="add-item-container">
                                 <input type="text" class="add-item-input" placeholder="Add a new item...">
                                 <button class="add-item-btn">Add</button>
+                                <button class="copy-list-btn" data-list="not-shareable-services-list" title="Copy Not Shareable Services List">Copy</button>
                             </div>
                             <div class="list-items"></div>
                         </div>

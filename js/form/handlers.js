@@ -2,7 +2,7 @@
 import { parseStartDate, isValidStartDate, getOrdinalSuffix } from './validation.js';
 import { displayMembershipYear } from './render.js';
 import { updateExpirationDate } from './toggles.js';
-import { getListItems, isAdditionalIUAVisible, getAdditionalIUAText } from './bulletLists.js';
+import { getListItems, isAdditionalIUAVisible, getAdditionalIUAText, isMaternityVisible, getMaternityText } from './bulletLists.js';
 
 /**
  * Initializes toggle buttons
@@ -406,11 +406,11 @@ function copyDivContent() {
     let content = '';
     const currentDate = new Date().toLocaleDateString();
 
-    // Get title
-    const titleInput = document.getElementById('requestTitle');
-    if (titleInput && titleInput.value.trim()) {
-        content += titleInput.value + '\n\n';
-    }
+    // Remove title from being copied
+    // const titleInput = document.getElementById('requestTitle');
+    // if (titleInput && titleInput.value.trim()) {
+    //     content += titleInput.value + '\n\n';
+    // }
 
     // Get date, name, and eligibility in one line
     content += currentDate + ' ';
@@ -491,6 +491,11 @@ function copyDivContent() {
         content += '\n\n' + getAdditionalIUAText();
     }
 
+    // Add Maternity text if visible
+    if (isMaternityVisible()) {
+        content += '\n\n' + getMaternityText();
+    }
+
     // Add bullet list content from shareable services if visible
     const shareableServicesList = document.getElementById('shareable-services-list');
     if (shareableServicesList && window.getComputedStyle(shareableServicesList).display !== 'none') {
@@ -503,7 +508,7 @@ function copyDivContent() {
         }
     }
 
-    // Add bullet list content from not shareable services if visible
+    // Fix: Add bullet list content from not shareable services if visible
     const notShareableServicesList = document.getElementById('not-shareable-services-list');
     if (notShareableServicesList && window.getComputedStyle(notShareableServicesList).display !== 'none') {
         const items = getListItems('not-shareable-services-list');
@@ -532,13 +537,31 @@ function copyDivContent() {
     }
 
     // Copy to clipboard
+    const mainCopyButton = document.getElementById('copyButton');
     navigator.clipboard.writeText(content)
         .then(() => {
-            alert("Container content copied to clipboard!\nBe sure to check the data after pasting.");
+            if (mainCopyButton) setMainCopyButtonState(mainCopyButton, true);
         })
         .catch(err => {
-            alert("Failed to copy: " + err);
+            if (mainCopyButton) setMainCopyButtonState(mainCopyButton, false);
         });
+}
+
+function setMainCopyButtonState(button, success) {
+    const originalText = button.textContent.replace(/\s[✔✖]$/, '');
+    if (success) {
+        button.style.backgroundColor = '#47CB8F'; // green
+        button.textContent = originalText + ' ✔';
+    } else {
+        button.style.backgroundColor = '#e74c3c'; // red
+        button.textContent = originalText + ' ✖';
+    }
+    button.disabled = true;
+    setTimeout(() => {
+        button.style.backgroundColor = '';
+        button.textContent = originalText;
+        button.disabled = false;
+    }, 1200);
 }
 
 export {

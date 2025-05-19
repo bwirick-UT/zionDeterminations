@@ -9,6 +9,9 @@ function initBulletLists() {
 
     // Initialize add item buttons
     initAddItemButtons();
+
+    // Initialize copy list buttons
+    initCopyListButtons();
 }
 
 /**
@@ -36,6 +39,14 @@ function initCheckboxHandlers() {
     if (additionalIUACheckbox) {
         additionalIUACheckbox.addEventListener('change', function() {
             toggleAdditionalIUA(this.checked);
+        });
+    }
+
+    // Handle maternity checkbox
+    const maternityCheckbox = document.getElementById('maternity');
+    if (maternityCheckbox) {
+        maternityCheckbox.addEventListener('change', function() {
+            toggleMaternity(this.checked);
         });
     }
 
@@ -80,6 +91,26 @@ function toggleAdditionalIUA(show) {
 }
 
 /**
+ * Toggles the visibility of the Maternity section
+ * @param {boolean} show - Whether to show or hide the section
+ */
+function toggleMaternity(show) {
+    const container = document.getElementById('maternity-container');
+    if (container) {
+        container.style.display = show ? 'block' : 'none';
+        // If showing, focus the date input
+        if (show) {
+            const input = document.getElementById('maternity-edc-date');
+            if (input) {
+                setTimeout(() => {
+                    input.focus();
+                }, 100);
+            }
+        }
+    }
+}
+
+/**
  * Initializes add item buttons for all bullet lists
  */
 function initAddItemButtons() {
@@ -112,6 +143,66 @@ function initAddItemButtons() {
             }
         });
     });
+}
+
+/**
+ * Initializes copy list buttons for all bullet lists
+ */
+function initCopyListButtons() {
+    const copyButtons = document.querySelectorAll('.copy-list-btn');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const listId = this.getAttribute('data-list');
+            copyBulletListToClipboard(listId, this);
+        });
+    });
+}
+
+/**
+ * Copies the bullet list items to the clipboard
+ * @param {string} listId - The ID of the list to copy
+ * @param {HTMLElement} button - The button element to update UI feedback
+ */
+function copyBulletListToClipboard(listId, button) {
+    const items = getListItems(listId);
+    let content = '';
+    if (items.length > 0) {
+        // Only copy the bullet list, no title
+        items.forEach(item => {
+            content += '\n• ' + item;
+        });
+        navigator.clipboard.writeText(content.trim())
+            .then(() => {
+                setCopyButtonState(button, true);
+            })
+            .catch(() => {
+                setCopyButtonState(button, false);
+            });
+    } else {
+        setCopyButtonState(button, false);
+    }
+}
+
+/**
+ * Sets the copy button state to success (green/check) or failure (red/x)
+ * @param {HTMLElement} button
+ * @param {boolean} success
+ */
+function setCopyButtonState(button, success) {
+    const originalText = button.textContent;
+    if (success) {
+        button.style.backgroundColor = '#47CB8F'; // green
+        button.textContent = originalText + ' ✔';
+    } else {
+        button.style.backgroundColor = '#e74c3c'; // red
+        button.textContent = originalText + ' ✖';
+    }
+    button.disabled = true;
+    setTimeout(() => {
+        button.style.backgroundColor = '';
+        button.textContent = originalText;
+        button.disabled = false;
+    }, 1200);
 }
 
 /**
@@ -277,10 +368,37 @@ function getAdditionalIUAText() {
     return `Services are being done for ${areaText}, for ease of processing requests will stay together, but member is subject to an additional IUA.`;
 }
 
+/**
+ * Checks if the Maternity section is visible
+ * @returns {boolean} - Whether the section is visible
+ */
+function isMaternityVisible() {
+    const container = document.getElementById('maternity-container');
+    return container && window.getComputedStyle(container).display !== 'none';
+}
+
+/**
+ * Gets the Maternity text for copying
+ * @returns {string} - The formatted Maternity text
+ */
+function getMaternityText() {
+    if (!isMaternityVisible()) return '';
+    const dateInput = document.getElementById('maternity-edc-date');
+    let dateText = '';
+    if (dateInput && dateInput.value) {
+        dateText = dateInput.value;
+    } else {
+        dateText = 'Estimated Due Date';
+    }
+    return "Shareable for services contained within the 'What Is Shareable' section of the Maternity Guidelines\n EDC; " + dateText;
+}
+
 // Export all necessary functions
 export {
     initBulletLists,
     getListItems,
     isAdditionalIUAVisible,
-    getAdditionalIUAText
+    getAdditionalIUAText,
+    isMaternityVisible,
+    getMaternityText
 };
