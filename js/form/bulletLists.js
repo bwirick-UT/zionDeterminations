@@ -390,7 +390,7 @@ function getMaternityText() {
     } else {
         dateText = 'Estimated Due Date';
     }
-    return "Shareable for services contained within the 'What Is Shareable' section of the Maternity Guidelines\n EDC; " + dateText;
+    return "Shareable for services contained within the 'What Is Shareable' section of the Maternity Guidelines\n EDC: " + dateText;
 }
 
 // Export all necessary functions
