@@ -424,8 +424,10 @@ function copyDivContent() {
         });
     }
 
-    // Get eligibility status
+    // Get eligibility select element and status
     const eligibilitySelect = document.getElementById('eligibility');
+    const eligibilityStatus = eligibilitySelect ? eligibilitySelect.value : null;
+    
     if (eligibilitySelect && eligibilitySelect.selectedIndex > 0) {
         content += eligibilitySelect.options[eligibilitySelect.selectedIndex].innerHTML;
     }
@@ -530,10 +532,12 @@ function copyDivContent() {
         content += '\n\n' + getPendingPHIText();
     }
 
-    // Add final statement
-    const finalStatement = document.getElementById('final-statement');
-    if (finalStatement) {
-        content += '\n\n' + finalStatement.innerHTML;
+    // Add final statement only if not ineligible
+    if (eligibilityStatus !== 'ineligible') {
+        const finalStatement = document.getElementById('final-statement');
+        if (finalStatement) {
+            content += '\n\n' + finalStatement.innerHTML;
+        }
     }
 
     // Copy to clipboard
