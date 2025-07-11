@@ -59,18 +59,23 @@ function toggleExpirationDate(show, startDate) {
  * @param {string} selectedChoice - The selected eligibility option
  */
 function updateEligibilitySections(selectedChoice) {
-    if (selectedChoice === 'eligible') {
-        document.getElementById('shareable').style.display = 'inline';
-        document.getElementById('not-shareable').style.display = 'none';
-        document.getElementById('more-info').style.display = 'none';
-    } else if (selectedChoice === 'ineligible') {
-        document.getElementById('shareable').style.display = 'none';
-        document.getElementById('not-shareable').style.display = 'inline';
-        document.getElementById('more-info').style.display = 'none';
-    } else if (selectedChoice === 'additional_info') {
-        document.getElementById('shareable').style.display = 'none';
-        document.getElementById('not-shareable').style.display = 'none';
-        document.getElementById('more-info').style.display = 'inline';
+    const standardDetermination = document.getElementById('standard-determination');
+    const additionalInfoDetermination = document.getElementById('additional-info-determination');
+
+    if (selectedChoice === 'additional_info') {
+        standardDetermination.style.display = 'none';
+        additionalInfoDetermination.style.display = 'block';
+    } else {
+        standardDetermination.style.display = 'block';
+        additionalInfoDetermination.style.display = 'none';
+        
+        if (selectedChoice === 'eligible') {
+            document.getElementById('shareable').style.display = 'inline';
+            document.getElementById('not-shareable').style.display = 'none';
+        } else if (selectedChoice === 'ineligible') {
+            document.getElementById('shareable').style.display = 'none';
+            document.getElementById('not-shareable').style.display = 'inline';
+        }
     }
 }
 

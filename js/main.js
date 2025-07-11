@@ -1,5 +1,5 @@
 // Main entry point for the application
-import { copyDivContent, handleStartDateChange } from './form/handlers.js';
+import { copyDivContent, handleStartDateChange, copyChoiceContent } from './form/handlers.js';
 import { initThemeToggle } from './form/theme.js';
 import { initToggleButtons } from './form/toggles.js';
 import { initEligibilityHandlers } from './form/eligibility.js';
@@ -41,10 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
         startDateInput.addEventListener('input', handleStartDateChange);
     }
 
-    // Add event listener for the copy button
+    // Add event listener for the main copy button
     const copyButton = document.getElementById('copyButton');
     if (copyButton) {
         copyButton.addEventListener('click', copyDivContent);
+    }
+
+    // Add event listener for the choice copy button
+    const copyChoiceButton = document.getElementById('copyChoiceButton');
+    if (copyChoiceButton) {
+        copyChoiceButton.addEventListener('click', copyChoiceContent);
     }
 
     console.log('All event listeners initialized via main.js');

@@ -444,20 +444,27 @@ function copyDivContent() {
         // Add determination content
         content += '\n\n';
 
-        // Add "Medical Records" text
-        content += 'Medical Records ';
+        if (eligibilityStatus === 'additional_info') {
+            // For additional info, use the textbox content
+            const additionalInfoText = document.getElementById('additional-info-text');
+            if (additionalInfoText && additionalInfoText.value.trim()) {
+                content += 'Medical Records pending verification.\n\n';
+                content += additionalInfoText.value.trim();
+            }
+        } else {
+            // For other statuses, use the standard format
+            content += 'Medical Records ';
 
-        // Add verified records if applicable
-        const verifiedButton = document.getElementById('left4');
-        const notVerifiedButton = document.getElementById('right4');
-        if (verifiedButton && verifiedButton.classList.contains('active')) {
-            content += verifiedButton.value;
-        } else if (notVerifiedButton && notVerifiedButton.classList.contains('active')) {
-            content += notVerifiedButton.value;
+            const verifiedButton = document.getElementById('left4');
+            const notVerifiedButton = document.getElementById('right4');
+            if (verifiedButton && verifiedButton.classList.contains('active')) {
+                content += verifiedButton.value;
+            } else if (notVerifiedButton && notVerifiedButton.classList.contains('active')) {
+                content += notVerifiedButton.value;
+            }
+
+            content += ' been verified, and we are ';
         }
-
-        // Add the rest of the determination text
-        content += ' been verified, and we are ';
 
         // Handle different eligibility options and their related elements
         const shareableSelect = document.getElementById('shareable');
@@ -532,8 +539,8 @@ function copyDivContent() {
         content += '\n\n' + getPendingPHIText();
     }
 
-    // Add final statement only if not ineligible
-    if (eligibilityStatus !== 'ineligible') {
+    // Add final statement only if eligible
+    if (eligibilityStatus === 'eligible') {
         const finalStatement = document.getElementById('final-statement');
         if (finalStatement) {
             content += '\n\n' + finalStatement.innerHTML;
@@ -549,6 +556,35 @@ function copyDivContent() {
         .catch(err => {
             if (mainCopyButton) setMainCopyButtonState(mainCopyButton, false);
         });
+}
+
+/**
+ * Copies the status information from the choice div
+ */
+function copyChoiceContent() {
+    const dateDisplay = document.getElementById('dateDisplay').textContent;
+    const eligibilitySelect = document.getElementById('eligibility');
+    const eligibilityText = eligibilitySelect.selectedIndex > 0 ? 
+        eligibilitySelect.options[eligibilitySelect.selectedIndex].innerHTML : '';
+
+    const content = `${dateDisplay} JaydenW - ${eligibilityText}`;
+    
+    clearClipboard().then(() => {
+        const copyButton = document.getElementById('copyChoiceButton');
+        navigator.clipboard.writeText(content)
+            .then(() => {
+                if (copyButton) {
+                    setMainCopyButtonState(copyButton, true);
+                    console.log('Choice content copied successfully');
+                }
+            })
+            .catch((err) => {
+                if (copyButton) {
+                    setMainCopyButtonState(copyButton, false);
+                    console.error('Failed to copy choice content:', err);
+                }
+            });
+    });
 }
 
 function setMainCopyButtonState(button, success) {
@@ -575,6 +611,7 @@ export {
     verifiedRecords,
     clearClipboard,
     copyDivContent,
+    copyChoiceContent,
     calculateMedicalExpenseCap,
     calculateLastAnniversaryDate,
     formatDate,

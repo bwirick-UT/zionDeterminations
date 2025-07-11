@@ -114,6 +114,7 @@
                 <div id="choice">
                     <span id="dateDisplay"></span>
                     <p>JaydenW - </p>
+                    <button id="copyChoiceButton" class="copy-btn">Copy Status</button>
                     <select type="text" name="eligibility" id="eligibility">
                         <option value="null">Select Eligibility Status...</option>
                         <option value="eligible">Eligible for Sharing</option>
@@ -126,25 +127,25 @@
                     <p>More information will be shown based on eligibility status selection.</p>
                 </div>
 
-                <div id="determination">
-                    <p>Medical Records&emsp;</p>
-                    <button id="left4" class="toggle-btn left-side" value="have">Have</button><button id="right4" class="toggle-btn right-side" value="have not">Have Not</button>
-                    <p>&emsp;been verified, and we are </p>
-                    <select id="shareable">
-                        <option value="null">Select sharing option...</option>
-                        <option value="posDeterCap">able to share in medical expenses after</option>
-                        <option value="posDeter">able to share in this need.</option>
-                    </select>
-
-                    <span id="anniversaryAndCap" style="display: none;"></span>
-                    <select id="not-shareable">
-                        <option value="null">Select ineligibility reason...</option>
-                        <option value="guideWatch">per pre-membership guidelines</option>
-                    </select>
-                    <select id="more-info">
-                        <option value="null">Select additional info needed...</option>
-                        <option value="needRecords">pending medical records</option>
-                    </select>
+                <div id="determination" style="display: none;">
+                    <div id="standard-determination">
+                        <p>Medical Records&emsp;</p>
+                        <button id="left4" class="toggle-btn left-side" value="have">Have</button><button id="right4" class="toggle-btn right-side" value="have not">Have Not</button>
+                        <p>&emsp;been verified, and we are </p>
+                        <select id="shareable">
+                            <option value="null">Select sharing option...</option>
+                            <option value="posDeterCap">able to share in medical expenses after</option>
+                            <option value="posDeter">able to share in this need.</option>
+                        </select>
+                        <span id="anniversaryAndCap" style="display: none;"></span>
+                        <select id="not-shareable">
+                            <option value="null">Select ineligibility reason...</option>
+                            <option value="guideWatch">per pre-membership guidelines</option>
+                        </select>
+                    </div>
+                    <div id="additional-info-determination" style="display: none;">
+                        <textarea id="additional-info-text" placeholder="Enter additional information text..." style="width: 100%; height: 150px; padding: 8px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; resize: vertical;"></textarea>
+                    </div>
                 </div>
 
                 <div id="reasoning">
