@@ -1,4 +1,5 @@
 // Checkbox selectors handling functions
+import { calculateSixMonthsPriorDate } from './handlers.js';
 
 /**
  * Initializes all checkbox selectors
@@ -27,15 +28,8 @@ function handleCheckboxChange(event) {
     if (checkboxId === 'six-months') {
         const sixMonthsDateElement = document.getElementById('sixMonthsDate');
         if (isChecked) {
-            // Calculate date 6 months from now
-            const date = new Date();
-            date.setMonth(date.getMonth() + 6);
-            const formattedDate = date.toLocaleDateString('en-US', { 
-                month: 'numeric', 
-                day: 'numeric', 
-                year: 'numeric' 
-            });
-            sixMonthsDateElement.textContent = `6 Month Date: ${formattedDate}`;
+            const sixMonthsDate = calculateSixMonthsPriorDate();
+            sixMonthsDateElement.textContent = `6 Month Prior: ${sixMonthsDate}`;
             sixMonthsDateElement.style.display = 'block';
         } else {
             sixMonthsDateElement.style.display = 'none';
