@@ -23,8 +23,24 @@ function handleCheckboxChange(event) {
     
     console.log(`Checkbox ${checkboxId} is now ${isChecked ? 'checked' : 'unchecked'}`);
     
-    // This function will be expanded later to populate options on the right side
-    // when checkboxes are checked
+    // Handle six months checkbox
+    if (checkboxId === 'six-months') {
+        const sixMonthsDateElement = document.getElementById('sixMonthsDate');
+        if (isChecked) {
+            // Calculate date 6 months from now
+            const date = new Date();
+            date.setMonth(date.getMonth() + 6);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                month: 'numeric', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+            sixMonthsDateElement.textContent = `6 Month Date: ${formattedDate}`;
+            sixMonthsDateElement.style.display = 'block';
+        } else {
+            sixMonthsDateElement.style.display = 'none';
+        }
+    }
 }
 
 export {

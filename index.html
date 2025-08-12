@@ -112,9 +112,16 @@
                 <div><input type="text" id="requestTitle" placeholder="TITLE"><br><br></div>
 
                 <div id="choice">
-                    <span id="dateDisplay"></span>
-                    <p>JaydenW - </p>
-                    <button id="copyChoiceButton" class="copy-btn">Copy Status</button>
+                    <div class="choice-header">
+                        <div class="choice-left">
+                            <span id="dateDisplay"></span>
+                            <p>JaydenW - </p>
+                        </div>
+                        <button id="copyChoiceButton" class="copy-btn">Copy Status</button>
+                        <div class="choice-right">
+                            <span id="sixMonthsDate" style="display: none;"></span>
+                        </div>
+                    </div>
                     <select type="text" name="eligibility" id="eligibility">
                         <option value="null">Select Eligibility Status...</option>
                         <option value="eligible">Eligible for Sharing</option>

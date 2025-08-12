@@ -561,6 +561,39 @@ textarea:focus {
     box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
 }
 
+/* Choice section styling */
+.choice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.choice-left {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+
+.choice-right {
+    color: #666;
+    flex: 1;
+    text-align: right;
+}
+
+.dark-theme .choice-right {
+    color: #999;
+}
+
+#copyChoiceButton {
+    margin: 0;
+    padding: 4px 12px;
+    white-space: nowrap;
+    align-self: flex-start;
+}
+
 /* Sortable list styles */
 .list-items li {
     display: flex;
