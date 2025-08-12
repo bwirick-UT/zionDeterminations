@@ -8,6 +8,7 @@ import { getOrdinalSuffix } from './form/validation.js';
 import { calculateMembershipYear } from './form/handlers.js';
 import { initCheckboxSelectors } from './form/checkboxes.js';
 import { initBulletLists } from './form/bulletLists.js';
+import { initSortableLists } from './form/sortable.js';
 
 // Initialize the application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -34,6 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize bullet lists
     initBulletLists();
+
+    // Initialize sortable lists
+    initSortableLists();
 
     // Initialize start date handler
     const startDateInput = document.getElementById('start-date');

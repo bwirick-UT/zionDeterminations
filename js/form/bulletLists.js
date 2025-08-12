@@ -213,9 +213,10 @@ function setCopyButtonState(button, success) {
 function addItemToList(listContainer, text) {
     const itemId = 'item-' + Date.now();
 
-    const listItem = document.createElement('div');
+    const listItem = document.createElement('li');
     listItem.className = 'list-item';
     listItem.id = itemId;
+    listItem.draggable = true;
 
     listItem.innerHTML = `
         <span class="bullet-point">•</span>

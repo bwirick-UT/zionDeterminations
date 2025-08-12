@@ -560,3 +560,43 @@ textarea:focus {
     border-color: #0078d4;
     box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
 }
+
+/* Sortable list styles */
+.list-items li {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin: 4px 0;
+    list-style-type: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: grab;
+    user-select: none;
+    position: relative;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.dark-theme .list-items li {
+    background-color: rgba(45, 45, 45, 0.8);
+    border-color: #404040;
+}
+
+.list-items li.dragging {
+    opacity: 0.9;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    cursor: grabbing;
+}
+
+.dark-theme .list-items li.dragging {
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.list-items li::before {
+    content: "☰";
+    margin-right: 8px;
+    opacity: 0.5;
+    cursor: grab;
+}
